@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Chatbot Contabil</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<header class="topbar">
+    <div>
+        <strong>Escritorio Contabil</strong>
+        <span>Atendimentos do chatbot</span>
+    </div>
+    <button id="refreshButton" type="button">Atualizar</button>
+</header>
+
+<main class="layout">
+    <section class="panel">
+        <div class="panel-header">
+            <h1>Atendimentos</h1>
+            <span id="totalAtendimentos">0 registros</span>
+        </div>
+        <div class="table-wrap">
+            <table>
+                <thead>
+                <tr>
+                    <th>Cliente</th>
+                    <th>Tipo</th>
+                    <th>Data</th>
+                    <th>Status</th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody id="atendimentosBody"></tbody>
+            </table>
+        </div>
+    </section>
+
+    <aside class="panel detail">
+        <div class="panel-header">
+            <h2>Historico</h2>
+            <span id="historicoCliente">Selecione um atendimento</span>
+        </div>
+        <div id="historico" class="history empty">Nenhuma conversa selecionada.</div>
+    </aside>
+
+    <section class="panel webchat">
+        <div class="panel-header">
+            <h2>Teste do chatbot</h2>
+            <span>Web chat local</span>
+        </div>
+        <form id="clienteForm" class="client-form">
+            <input id="nome" placeholder="Nome" required>
+            <input id="telefone" placeholder="Telefone" required>
+            <input id="email" type="email" placeholder="E-mail" required>
+            <input id="cpfCnpj" placeholder="CPF/CNPJ" required>
+            <select id="tipoPessoa" required>
+                <option value="FISICA">Fisica</option>
+                <option value="JURIDICA">Juridica</option>
+            </select>
+            <button type="submit">Criar cliente</button>
+        </form>
+        <div id="chatBox" class="chat-box"></div>
+        <form id="chatForm" class="chat-form">
+            <input id="chatInput" placeholder="Digite 1 a 8 ou uma mensagem" required>
+            <button type="submit">Enviar</button>
+        </form>
+    </section>
+</main>
+
+<script src="script.js"></script>
+</body>
+</html>
