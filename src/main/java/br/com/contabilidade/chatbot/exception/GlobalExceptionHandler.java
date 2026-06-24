@@ -26,13 +26,18 @@ public class GlobalExceptionHandler {
         Map<String, String> fields = new HashMap<>();
         ex.getBindingResult().getFieldErrors().forEach(error ->
                 fields.put(error.getField(), error.getDefaultMessage()));
-        return build(HttpStatus.BAD_REQUEST, "Dados invalidos", fields);
+        return build(HttpStatus.BAD_REQUEST, "Dados inválidos", fields);
+    }
+
+    @ExceptionHandler(IllegalArgumentException.class)
+    public ResponseEntity<ApiError> handleIllegalArgument(IllegalArgumentException ex) {
+        return build(HttpStatus.BAD_REQUEST, ex.getMessage(), Map.of());
     }
 
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ApiError> handleUnexpected(Exception ex) {
         log.error("Erro inesperado na API", ex);
-        return build(HttpStatus.INTERNAL_SERVER_ERROR, "Erro interno ao processar solicitacao", Map.of());
+        return build(HttpStatus.INTERNAL_SERVER_ERROR, "Erro interno ao processar solicitação", Map.of());
     }
 
     private ResponseEntity<ApiError> build(HttpStatus status, String message, Map<String, String> fields) {

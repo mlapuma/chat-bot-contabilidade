@@ -25,6 +25,24 @@ Acesse:
 - API: `http://localhost:8080/api`
 - PostgreSQL: `localhost:5432`
 
+## Deploy em producao
+
+Para producao barata em VPS, use:
+
+```text
+docker-compose.prod.yml
+PostgreSQL no mesmo servidor
+Nginx por IP publico inicialmente
+Let's Encrypt depois, quando houver subdominio
+Webhook fixo da Meta
+```
+
+Guia completo:
+
+```text
+docs/deploy-producao-vps.md
+```
+
 Credenciais padrao do banco:
 
 - Database: `chatbot_contabilidade`
@@ -88,12 +106,29 @@ curl -X PUT http://localhost:8080/api/atendimentos/1/status \
   -d '{"status": "FINALIZADO"}'
 ```
 
+### Assumir atendimento
+
+```bash
+curl -X POST http://localhost:8080/api/atendimentos/1/assumir \
+  -H "Content-Type: application/json" \
+  -d '{"atendente": "Ana"}'
+```
+
+### Responder cliente pelo WhatsApp
+
+```bash
+curl -X POST http://localhost:8080/api/atendimentos/1/responder \
+  -H "Content-Type: application/json" \
+  -d '{"atendente": "Ana", "mensagem": "Olá, vou te ajudar com essa solicitação."}'
+```
+
 ## Fluxo do chatbot
 
 Mensagem inicial:
 
 ```text
-Ola! Seja bem-vindo ao atendimento do escritorio contabil. Como posso ajudar?
+Olá! Você está falando com a ACSA Contabilidade.
+Como podemos ajudar?
 
 1 - Abrir empresa
 2 - Regularizar MEI
@@ -106,6 +141,8 @@ Ola! Seja bem-vindo ao atendimento do escritorio contabil. Como posso ajudar?
 ```
 
 Cada opcao cria um `Atendimento`, registra as mensagens em `MensagemChat`, coleta os campos necessarios e salva os dados em JSON no campo `dadosColetados`.
+
+Na opcao `1 - Abrir empresa`, o bot coleta nome, telefone, e-mail, cidade/estado, atividade principal, tipo de empresa pretendida, se tera socios, se tera funcionarios no inicio e se ja possui CNPJ. Esse fluxo foi desenhado para dar ao contador contexto suficiente para orientar o cliente entre MEI, ME, LTDA ou outro enquadramento adequado.
 
 Status disponiveis:
 
@@ -134,6 +171,81 @@ Pacotes principais:
 ## WhatsApp Business API
 
 A interface `CanalMensagemService` permite trocar o canal de envio de mensagens. A implementacao `WebChatService` cobre o chat web atual. A classe `WhatsAppService` ja esta preparada com comentarios indicando os pontos de integracao com a WhatsApp Business Cloud API.
+
+### Teste real com WhatsApp Cloud API
+
+O projeto possui webhook real em:
+
+```text
+GET  /api/whatsapp/webhook
+POST /api/whatsapp/webhook
+```
+
+Variaveis de ambiente:
+
+```text
+WHATSAPP_CLOUD_ENABLED=true
+WHATSAPP_CLOUD_API_VERSION=v23.0
+WHATSAPP_CLOUD_PHONE_NUMBER_ID=seu_phone_number_id
+WHATSAPP_CLOUD_ACCESS_TOKEN=seu_token_da_meta
+WHATSAPP_CLOUD_VERIFY_TOKEN=um_token_que_voce_escolhe
+```
+
+Para testar com o backend local, exponha a porta 8080 com uma URL publica:
+
+```bash
+ngrok http 8080
+```
+
+No painel da Meta, configure:
+
+```text
+Callback URL: https://sua-url-ngrok.ngrok-free.app/api/whatsapp/webhook
+Verify token: mesmo valor de WHATSAPP_CLOUD_VERIFY_TOKEN
+Webhook field: messages
+```
+
+Quando uma mensagem de texto chegar no numero de teste da Meta, o webhook:
+
+- identifica o telefone do remetente;
+- cria ou reutiliza o cliente;
+- envia a mensagem para `ChatbotService`;
+- registra atendimento e historico;
+- responde ao usuario usando `/{phone-number-id}/messages`, quando token e phone number id estiverem configurados.
+
+### Painel multiatendente
+
+O painel permite que mais de uma pessoa trabalhe no mesmo número conectado à WhatsApp Cloud API:
+
+- cada atendente informa seu nome no topo do painel;
+- a lista mostra quem está responsável por cada atendimento;
+- um atendente pode assumir ou liberar um atendimento;
+- o histórico mostra mensagens do cliente, do bot e de humanos;
+- a resposta humana é registrada no histórico e enviada ao WhatsApp quando a Cloud API estiver configurada.
+
+Observacao: esta versão usa identificação simples pelo nome do atendente no navegador. Para produção, recomenda-se adicionar login, permissões, auditoria e sessões de usuário.
+
+Observacao: a criacao do app, token, numero de teste e assinatura do webhook precisam ser feitas na sua conta Meta, pois dependem de login e permissoes.
+
+Scripts uteis no Windows:
+
+```powershell
+.\scripts\start-local-whatsapp-test.ps1 `
+  -PhoneNumberId "SEU_PHONE_NUMBER_ID" `
+  -AccessToken "SEU_ACCESS_TOKEN"
+```
+
+Em outro terminal:
+
+```powershell
+ngrok http 8080
+```
+
+Para checar se o webhook esta respondendo:
+
+```powershell
+.\scripts\check-whatsapp-webhook.ps1
+```
 
 ## Testes
 

@@ -1,0 +1,19 @@
+Tipo;Categoria;Item;Obrigatorio;Fornecedor/Opcao;Periodicidade;Custo minimo R$;Custo maximo R$;Repasse ao cliente;Observacao
+Mensal;Infraestrutura;VPS 2 GB RAM;Sim;AWS EC2 / DigitalOcean / Hostinger VPS / similar;Mensal;60;100;Sim;Servidor para rodar backend Spring Boot, PostgreSQL, Docker e Nginx. Nao inclui dominio porque o cliente ja possui.
+Mensal;Banco de dados;PostgreSQL no mesmo servidor;Sim;Instalado na propria VPS;Mensal;0;0;Incluso na VPS;Sem custo separado de banco. Exige backup e manutencao.
+Mensal;HTTPS/SSL;Certificado SSL;Sim;Let's Encrypt;Mensal;0;0;Nao;SSL gratuito, renovacao automatica via Certbot/Nginx.
+Mensal;Backup;Backup automatico do PostgreSQL;Recomendado;Snapshot da VPS ou dump externo;Mensal;10;30;Sim;Recomendado salvar fora da VPS. Pode usar snapshot, storage externo ou rotina de dump.
+Mensal;Monitoramento;Monitoramento simples de disponibilidade;Recomendado;UptimeRobot / Better Stack / Healthchecks / similar;Mensal;0;30;Opcional;Aviso se a API/webhook sair do ar.
+Mensal;WhatsApp;WhatsApp Cloud API;Sim;Meta;Mensal;0;0;Cobrar a parte;Custo varia conforme volume e categoria das mensagens. Token permanente nao tem custo.
+Mensal;Manutencao;Atualizacao e suporte tecnico;Sim;Servico proprio;Mensal;300;1000;Sim;Inclui checagem de logs, atualizacoes, suporte, pequenos ajustes e acompanhamento.
+Mensal;Operacao;Margem sobre infraestrutura;Opcional;Servico proprio;Mensal;50;150;Sim;Margem para administrar servidor, risco operacional e atendimento.
+Mensal;Resumo;Total infraestrutura sem WhatsApp e sem suporte;Sim;Estimativa;Mensal;70;160;Sim;VPS + backup + monitoramento. Nao inclui dominio.
+Mensal;Resumo;Mensalidade sugerida ao cliente;Sim;Preco comercial;Mensal;400;900;Sim;Inclui infraestrutura, manutencao e suporte basico. WhatsApp Cloud API pode ser cobrado a parte.
+Inicial;Implantacao;Configuracao do servidor;Sim;Servico proprio;Unico;400;1000;Sim;Instalar Docker, Nginx, SSL, firewall, variaveis e banco.
+Inicial;Implantacao;Deploy da aplicacao;Sim;Servico proprio;Unico;400;1000;Sim;Subir backend, configurar PostgreSQL, validar endpoints e logs.
+Inicial;WhatsApp;Configuracao Meta/WhatsApp Cloud API;Sim;Servico proprio;Unico;400;1200;Sim;App Meta, webhook, token permanente, phone number id, assinatura de messages e testes.
+Inicial;Chatbot;Ajustes de fluxo e homologacao;Recomendado;Servico proprio;Unico;500;2000;Sim;Ajustar mensagens, opcoes, validacao com a contabilidade e testes reais.
+Inicial;Seguranca;Login no painel administrativo;Recomendado;Servico proprio;Unico;500;1500;Sim;Importante antes de expor painel em producao.
+Inicial;Resumo;Setup inicial sugerido;Sim;Preco comercial;Unico;1500;3500;Sim;Faixa sugerida para implantacao completa sem dominio.
+Anual;Dominio;Dominio do cliente;Nao;Cliente ja possui;Anual;0;0;Nao;Criar apenas subdominio DNS, exemplo api.acsa.com.br.
+Anual;SSL;Renovacao SSL;Sim;Let's Encrypt;Anual;0;0;Nao;Renovacao automatica.

@@ -4,3 +4,10 @@ target/
 *.iml
 *.log
 .env
+.env.production
+.docker-config/
+generated/
+backups/
+.deploy-keys/
+.tmp-*.ps1
+tools/

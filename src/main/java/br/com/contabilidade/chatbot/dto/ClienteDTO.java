@@ -26,7 +26,7 @@ public class ClienteDTO {
     private String email;
 
     @NotBlank
-    @Pattern(regexp = "^[0-9./-]{11,18}$", message = "CPF ou CNPJ deve conter apenas numeros e pontuacao comum")
+    @Pattern(regexp = "^[0-9./-]{11,18}$", message = "CPF ou CNPJ deve conter apenas números e pontuação comum")
     private String cpfCnpj;
 
     @NotNull

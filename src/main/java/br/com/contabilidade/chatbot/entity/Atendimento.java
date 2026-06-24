@@ -39,6 +39,12 @@ public class Atendimento {
     @Column(name = "dados_coletados", columnDefinition = "text")
     private String dadosColetados;
 
+    @Column(name = "atendente_responsavel", length = 120)
+    private String atendenteResponsavel;
+
+    @Column(name = "assumido_em")
+    private LocalDateTime assumidoEm;
+
     @Column(name = "criado_em", nullable = false)
     private LocalDateTime criadoEm;
 
@@ -91,6 +97,22 @@ public class Atendimento {
 
     public void setDadosColetados(String dadosColetados) {
         this.dadosColetados = dadosColetados;
+    }
+
+    public String getAtendenteResponsavel() {
+        return atendenteResponsavel;
+    }
+
+    public void setAtendenteResponsavel(String atendenteResponsavel) {
+        this.atendenteResponsavel = atendenteResponsavel;
+    }
+
+    public LocalDateTime getAssumidoEm() {
+        return assumidoEm;
+    }
+
+    public void setAssumidoEm(LocalDateTime assumidoEm) {
+        this.assumidoEm = assumidoEm;
     }
 
     public LocalDateTime getCriadoEm() {

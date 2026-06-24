@@ -1,0 +1,469 @@
+<!doctype html><html lang="pt-BR"><head><meta charset="utf-8"><title>Mapa de validação dos fluxos do chatbot</title><style>@page{size:A4;margin:18mm}body{font-family:Arial,Helvetica,sans-serif;color:#1f2937;line-height:1.45;font-size:12px}h1{font-size:24px;margin:0 0 16px;color:#0f172a}h2{font-size:18px;margin:24px 0 10px;color:#123c69;border-bottom:1px solid #d8dee9;padding-bottom:5px}p{margin:8px 0}ul{margin:8px 0 12px 22px;padding:0}li{margin:3px 0}pre{background:#f7f9fc;border:1px solid #d8dee9;border-radius:6px;padding:10px;white-space:pre-wrap;font-family:Consolas,monospace;font-size:11px}code{font-family:Consolas,monospace;background:#eef2f7;padding:1px 4px;border-radius:4px}table{width:100%;border-collapse:collapse;margin:10px 0 14px;page-break-inside:auto}th,td{border:1px solid #d8dee9;padding:6px;vertical-align:top}th{background:#eef4fb;color:#0f172a;text-align:left}.muted{color:#64748b}.page-break{page-break-before:always}</style></head><body>
+<h1>Mapa de valida&#231;&#227;o dos fluxos do chatbot</h1>
+<p>Este documento descreve o passo a passo das conversas que o chatbot realiza para cada op&#231;&#227;o do menu principal. Ele pode ser usado pela equipe da contabilidade para validar se o atendimento inicial est&#225; coletando as informa&#231;&#245;es corretas.</p>
+<h2>Menu inicial</h2>
+<p>O bot deve enviar este menu quando o cliente inicia a conversa ou envia uma mensagem de sauda&#231;&#227;o/comando de menu, como:</p>
+<ul>
+<li><code>oi</code></li>
+<li><code>ol&#225;</code></li>
+<li><code>menu</code></li>
+<li><code>in&#237;cio</code></li>
+<li><code>op&#231;&#245;es</code></li>
+<li><code>bom dia</code></li>
+<li><code>boa tarde</code></li>
+<li><code>boa noite</code></li>
+</ul>
+<p>Mensagem esperada:</p>
+<pre>Ol&#225;! Voc&#234; est&#225; falando com a ACSA Contabilidade.
+Como podemos ajudar?
+
+1 - Abrir empresa
+2 - Regularizar MEI
+3 - Emitir DAS
+4 - Imposto de Renda
+5 - Folha de pagamento
+6 - Certid&#245;es negativas
+7 - Falar com contador
+8 - Enviar documentos</pre>
+<p>Observa&#231;&#227;o: ao enviar uma dessas mensagens de menu, o bot mostra as op&#231;&#245;es novamente e n&#227;o deve consumir a mensagem como resposta de um atendimento em andamento.</p>
+<h2>Op&#231;&#227;o 1 - Abrir empresa</h2>
+<p>Objetivo: coletar os dados iniciais para abertura de empresa.</p>
+<p>Tipo registrado: <code>ABRIR_EMPRESA</code></p>
+<p>Status durante coleta: <code>AGUARDANDO_CLIENTE</code></p>
+<p>Status ao concluir: <code>NOVO</code></p>
+<table><thead><tr>
+<th>Passo</th>
+<th>Cliente envia</th>
+<th>Bot responde</th>
+<th>Campo registrado</th>
+</tr></thead><tbody>
+<tr>
+<td>1</td>
+<td><code>1</code> ou texto parecido com &quot;abrir empresa&quot;</td>
+<td><code>Qual &#233; o seu nome?</code></td>
+<td>Inicia atendimento</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Nome do cliente</td>
+<td><code>Qual &#233; o seu telefone?</code></td>
+<td><code>nome</code></td>
+</tr>
+<tr>
+<td>3</td>
+<td>Telefone</td>
+<td><code>Qual &#233; o seu e-mail?</code></td>
+<td><code>telefone</code></td>
+</tr>
+<tr>
+<td>4</td>
+<td>E-mail</td>
+<td><code>Em qual cidade e estado a empresa ser&#225; aberta?</code></td>
+<td><code>email</code></td>
+</tr>
+<tr>
+<td>5</td>
+<td>Cidade e estado</td>
+<td><code>Qual ser&#225; a atividade principal da empresa?</code></td>
+<td><code>cidadeEstado</code></td>
+</tr>
+<tr>
+<td>6</td>
+<td>Atividade principal</td>
+<td>Menu com tipo de empresa: MEI, ME, LTDA ou ainda n&#227;o sabe</td>
+<td><code>atividadePrincipal</code></td>
+</tr>
+<tr>
+<td>7</td>
+<td>Tipo de empresa pretendida</td>
+<td>Menu sobre s&#243;cios: sim, n&#227;o ou ainda n&#227;o sabe</td>
+<td><code>tipoEmpresaPretendida</code></td>
+</tr>
+<tr>
+<td>8</td>
+<td>Informa&#231;&#227;o sobre s&#243;cios</td>
+<td>Menu sobre funcion&#225;rios no in&#237;cio: sim, n&#227;o ou ainda n&#227;o sabe</td>
+<td><code>teraSocios</code></td>
+</tr>
+<tr>
+<td>9</td>
+<td>Informa&#231;&#227;o sobre funcion&#225;rios</td>
+<td>Menu perguntando se j&#225; possui CNPJ: sim ou n&#227;o</td>
+<td><code>teraFuncionarios</code></td>
+</tr>
+<tr>
+<td>10</td>
+<td>Sim ou n&#227;o</td>
+<td><code>Obrigado. Registrei sua solicita&#231;&#227;o e um contador entrar&#225; em contato para dar continuidade ao atendimento.</code></td>
+<td><code>possuiCnpj</code></td>
+</tr>
+</tbody></table>
+<p>Exemplo de conversa:</p>
+<pre>Cliente: 1
+Bot: Qual &#233; o seu nome?
+Cliente: Maria Souza
+Bot: Qual &#233; o seu telefone?
+Cliente: 11 99999-0000
+Bot: Qual &#233; o seu e-mail?
+Cliente: maria@email.com
+Bot: Em qual cidade e estado a empresa ser&#225; aberta?
+Cliente: S&#227;o Paulo/SP
+Bot: Qual ser&#225; a atividade principal da empresa?
+Cliente: Presta&#231;&#227;o de servi&#231;os administrativos
+Bot: Qual tipo de empresa voc&#234; pretende abrir?
+
+1 - MEI
+2 - ME
+3 - LTDA
+4 - Ainda n&#227;o sei, quero orienta&#231;&#227;o
+Cliente: 4
+Bot: A empresa ter&#225; s&#243;cios?
+
+1 - Sim
+2 - N&#227;o
+3 - Ainda n&#227;o sei
+Cliente: 2
+Bot: A empresa ter&#225; funcion&#225;rios no in&#237;cio?
+
+1 - Sim
+2 - N&#227;o
+3 - Ainda n&#227;o sei
+Cliente: 3
+Bot: Voc&#234; j&#225; possui CNPJ?
+
+1 - Sim
+2 - N&#227;o
+Cliente: N&#227;o
+Bot: Obrigado. Registrei sua solicita&#231;&#227;o e um contador entrar&#225; em contato para dar continuidade ao atendimento.</pre>
+<p>Crit&#233;rio de valida&#231;&#227;o: o atendimento deve ficar registrado como <code>NOVO</code> e dispon&#237;vel para an&#225;lise do escrit&#243;rio, contendo nome, telefone, e-mail, cidade/estado, atividade principal, tipo de empresa pretendida, informa&#231;&#227;o sobre s&#243;cios, informa&#231;&#227;o sobre funcion&#225;rios e se j&#225; possui CNPJ.</p>
+<h2>Op&#231;&#227;o 2 - Regularizar MEI</h2>
+<p>Objetivo: coletar dados para regulariza&#231;&#227;o de MEI.</p>
+<p>Tipo registrado: <code>REGULARIZAR_MEI</code></p>
+<p>Status durante coleta: <code>AGUARDANDO_CLIENTE</code></p>
+<p>Status ao concluir: <code>NOVO</code></p>
+<table><thead><tr>
+<th>Passo</th>
+<th>Cliente envia</th>
+<th>Bot responde</th>
+<th>Campo registrado</th>
+</tr></thead><tbody>
+<tr>
+<td>1</td>
+<td><code>2</code> ou texto parecido com &quot;regularizar MEI&quot;</td>
+<td><code>Informe o CNPJ do MEI.</code></td>
+<td>Inicia atendimento</td>
+</tr>
+<tr>
+<td>2</td>
+<td>CNPJ do MEI</td>
+<td>Menu com a situa&#231;&#227;o atual do MEI: ativo com DAS em atraso, ativo com dados a regularizar, baixado/cancelado, inapto/pendente, desenquadrado ou n&#227;o sabe</td>
+<td><code>cnpj</code></td>
+</tr>
+<tr>
+<td>3</td>
+<td>Situa&#231;&#227;o atual</td>
+<td>Menu sobre DAS em atraso: sim, n&#227;o ou n&#227;o sei</td>
+<td><code>situacaoAtual</code></td>
+</tr>
+<tr>
+<td>4</td>
+<td>Informa&#231;&#227;o sobre DAS em atraso</td>
+<td><code>Qual telefone para contato?</code></td>
+<td><code>dasAtrasado</code></td>
+</tr>
+<tr>
+<td>5</td>
+<td>Telefone</td>
+<td><code>Obrigado. Registrei sua solicita&#231;&#227;o e um contador entrar&#225; em contato para dar continuidade ao atendimento.</code></td>
+<td><code>telefone</code></td>
+</tr>
+</tbody></table>
+<p>Exemplo de conversa:</p>
+<pre>Cliente: 2
+Bot: Informe o CNPJ do MEI.
+Cliente: 12.345.678/0001-90
+Bot: Qual &#233; a situa&#231;&#227;o atual do MEI?
+
+1 - Est&#225; ativo, mas tenho DAS em atraso
+2 - Est&#225; ativo, mas preciso regularizar dados
+3 - Est&#225; baixado/cancelado
+4 - Est&#225; inapto ou com pend&#234;ncias
+5 - Fui desenquadrado do MEI
+6 - N&#227;o sei a situa&#231;&#227;o atual
+Cliente: 4
+Bot: H&#225; DAS em atraso?
+
+1 - Sim
+2 - N&#227;o
+3 - N&#227;o sei
+Cliente: 1
+Bot: Qual telefone para contato?
+Cliente: 11 98888-7777
+Bot: Obrigado. Registrei sua solicita&#231;&#227;o e um contador entrar&#225; em contato para dar continuidade ao atendimento.</pre>
+<p>Crit&#233;rio de valida&#231;&#227;o: o atendimento deve conter CNPJ, situa&#231;&#227;o atual, informa&#231;&#227;o sobre DAS em atraso e telefone. O cliente deve conseguir responder usando o n&#250;mero da op&#231;&#227;o ou escrevendo a situa&#231;&#227;o em texto livre.</p>
+<h2>Op&#231;&#227;o 3 - Emitir DAS</h2>
+<p>Objetivo: coletar informa&#231;&#245;es para emiss&#227;o do DAS.</p>
+<p>Tipo registrado: <code>EMITIR_DAS</code></p>
+<p>Status durante coleta: <code>AGUARDANDO_CLIENTE</code></p>
+<p>Status ao concluir: <code>NOVO</code></p>
+<table><thead><tr>
+<th>Passo</th>
+<th>Cliente envia</th>
+<th>Bot responde</th>
+<th>Campo registrado</th>
+</tr></thead><tbody>
+<tr>
+<td>1</td>
+<td><code>3</code> ou texto parecido com &quot;emitir DAS&quot;</td>
+<td><code>Informe o CNPJ.</code></td>
+<td>Inicia atendimento</td>
+</tr>
+<tr>
+<td>2</td>
+<td>CNPJ</td>
+<td><code>Qual &#233; o m&#234;s de refer&#234;ncia?</code></td>
+<td><code>cnpj</code></td>
+</tr>
+<tr>
+<td>3</td>
+<td>M&#234;s de refer&#234;ncia</td>
+<td><code>Qual &#233; o e-mail que devemos usar para envio?</code></td>
+<td><code>mesReferencia</code></td>
+</tr>
+<tr>
+<td>4</td>
+<td>E-mail</td>
+<td><code>Obrigado. Registrei sua solicita&#231;&#227;o e um contador entrar&#225; em contato para dar continuidade ao atendimento. O PDF interno da solicita&#231;&#227;o do DAS foi gerado para uso da equipe cont&#225;bil. O contador far&#225; a emiss&#227;o oficial e entrar&#225; em contato com voc&#234;.</code></td>
+<td><code>emailEnvio</code>, <code>modoEmissaoDas</code>, <code>statusEmissaoDas</code>, <code>arquivoDasPdf</code>, <code>urlDasPdf</code></td>
+</tr>
+</tbody></table>
+<p>Exemplo de conversa:</p>
+<pre>Cliente: 3
+Bot: Informe o CNPJ.
+Cliente: 12.345.678/0001-90
+Bot: Qual &#233; o m&#234;s de refer&#234;ncia?
+Cliente: Junho/2026
+Bot: Qual &#233; o e-mail que devemos usar para envio?
+Cliente: financeiro@empresa.com.br
+Bot: Obrigado. Registrei sua solicita&#231;&#227;o e um contador entrar&#225; em contato para dar continuidade ao atendimento.
+
+O PDF interno da solicita&#231;&#227;o do DAS foi gerado para uso da equipe cont&#225;bil. O contador far&#225; a emiss&#227;o oficial e entrar&#225; em contato com voc&#234;.</pre>
+<p>Crit&#233;rio de valida&#231;&#227;o: o atendimento deve conter CNPJ, m&#234;s de refer&#234;ncia, e-mail de envio, caminho do PDF gerado e URL interna para download. O campo <code>modoEmissaoDas</code> deve ficar como <code>MANUAL_ASSISTIDO</code> e o campo <code>statusEmissaoDas</code> deve ficar como <code>AGUARDANDO_EMISSAO_OFICIAL</code>. O PDF &#233; um comprovante interno da solicita&#231;&#227;o de emiss&#227;o do DAS; a emiss&#227;o fiscal real deve ser confirmada pelo contador nos sistemas oficiais. A URL interna <code>/api/atendimentos/{id}/das-pdf</code> n&#227;o deve aparecer para o cliente no WhatsApp.</p>
+<h2>Op&#231;&#227;o 4 - Imposto de Renda</h2>
+<p>Objetivo: coletar dados para atendimento de Imposto de Renda.</p>
+<p>Tipo registrado: <code>IMPOSTO_DE_RENDA</code></p>
+<p>Status durante coleta: <code>AGUARDANDO_CLIENTE</code></p>
+<p>Status ao concluir: <code>NOVO</code></p>
+<table><thead><tr>
+<th>Passo</th>
+<th>Cliente envia</th>
+<th>Bot responde</th>
+<th>Campo registrado</th>
+</tr></thead><tbody>
+<tr>
+<td>1</td>
+<td><code>4</code> ou texto parecido com &quot;Imposto de Renda&quot;</td>
+<td><code>Qual &#233; o seu nome?</code></td>
+<td>Inicia atendimento</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Nome</td>
+<td><code>Informe o CPF.</code></td>
+<td><code>nome</code></td>
+</tr>
+<tr>
+<td>3</td>
+<td>CPF</td>
+<td><code>Qual &#233; o ano de refer&#234;ncia?</code></td>
+<td><code>cpf</code></td>
+</tr>
+<tr>
+<td>4</td>
+<td>Ano de refer&#234;ncia</td>
+<td><code>Voc&#234; possui informes de rendimento?</code></td>
+<td><code>anoReferencia</code></td>
+</tr>
+<tr>
+<td>5</td>
+<td>Sim ou n&#227;o</td>
+<td><code>Obrigado. Registrei sua solicita&#231;&#227;o e um contador entrar&#225; em contato para dar continuidade ao atendimento.</code></td>
+<td><code>possuiInformesRendimento</code></td>
+</tr>
+</tbody></table>
+<p>Exemplo de conversa:</p>
+<pre>Cliente: 4
+Bot: Qual &#233; o seu nome?
+Cliente: Jo&#227;o Pereira
+Bot: Informe o CPF.
+Cliente: 123.456.789-00
+Bot: Qual &#233; o ano de refer&#234;ncia?
+Cliente: 2026
+Bot: Voc&#234; possui informes de rendimento?
+Cliente: Sim
+Bot: Obrigado. Registrei sua solicita&#231;&#227;o e um contador entrar&#225; em contato para dar continuidade ao atendimento.</pre>
+<p>Crit&#233;rio de valida&#231;&#227;o: o atendimento deve conter nome, CPF, ano de refer&#234;ncia e confirma&#231;&#227;o sobre informes de rendimento.</p>
+<h2>Op&#231;&#227;o 5 - Folha de pagamento</h2>
+<p>Objetivo: coletar dados para atendimento de folha de pagamento.</p>
+<p>Tipo registrado: <code>FOLHA_DE_PAGAMENTO</code></p>
+<p>Status durante coleta: <code>AGUARDANDO_CLIENTE</code></p>
+<p>Status ao concluir: <code>NOVO</code></p>
+<table><thead><tr>
+<th>Passo</th>
+<th>Cliente envia</th>
+<th>Bot responde</th>
+<th>Campo registrado</th>
+</tr></thead><tbody>
+<tr>
+<td>1</td>
+<td><code>5</code> ou texto parecido com &quot;folha de pagamento&quot;</td>
+<td><code>Informe o CNPJ.</code></td>
+<td>Inicia atendimento</td>
+</tr>
+<tr>
+<td>2</td>
+<td>CNPJ</td>
+<td><code>Quantos funcion&#225;rios a empresa possui?</code></td>
+<td><code>cnpj</code></td>
+</tr>
+<tr>
+<td>3</td>
+<td>Quantidade de funcion&#225;rios</td>
+<td><code>Qual &#233; o m&#234;s de compet&#234;ncia?</code></td>
+<td><code>quantidadeFuncionarios</code></td>
+</tr>
+<tr>
+<td>4</td>
+<td>M&#234;s de compet&#234;ncia</td>
+<td><code>Obrigado. Registrei sua solicita&#231;&#227;o e um contador entrar&#225; em contato para dar continuidade ao atendimento.</code></td>
+<td><code>mesCompetencia</code></td>
+</tr>
+</tbody></table>
+<p>Exemplo de conversa:</p>
+<pre>Cliente: 5
+Bot: Informe o CNPJ.
+Cliente: 12.345.678/0001-90
+Bot: Quantos funcion&#225;rios a empresa possui?
+Cliente: 8
+Bot: Qual &#233; o m&#234;s de compet&#234;ncia?
+Cliente: Junho/2026
+Bot: Obrigado. Registrei sua solicita&#231;&#227;o e um contador entrar&#225; em contato para dar continuidade ao atendimento.</pre>
+<p>Crit&#233;rio de valida&#231;&#227;o: o atendimento deve conter CNPJ, quantidade de funcion&#225;rios e m&#234;s de compet&#234;ncia.</p>
+<h2>Op&#231;&#227;o 6 - Certid&#245;es negativas</h2>
+<p>Objetivo: coletar dados para emiss&#227;o ou consulta de certid&#245;es negativas.</p>
+<p>Tipo registrado: <code>CERTIDOES_NEGATIVAS</code></p>
+<p>Status durante coleta: <code>AGUARDANDO_CLIENTE</code></p>
+<p>Status ao concluir: <code>NOVO</code></p>
+<table><thead><tr>
+<th>Passo</th>
+<th>Cliente envia</th>
+<th>Bot responde</th>
+<th>Campo registrado</th>
+</tr></thead><tbody>
+<tr>
+<td>1</td>
+<td><code>6</code> ou texto parecido com &quot;certid&#245;es negativas&quot;</td>
+<td><code>Informe o CNPJ.</code></td>
+<td>Inicia atendimento</td>
+</tr>
+<tr>
+<td>2</td>
+<td>CNPJ</td>
+<td>Menu com tipos de certid&#227;o: Receita Federal/PGFN, FGTS, Trabalhista, Estadual, Municipal, Fal&#234;ncia/recupera&#231;&#227;o judicial, todas ou ajuda do contador</td>
+<td><code>cnpj</code></td>
+</tr>
+<tr>
+<td>3</td>
+<td>Tipo de certid&#227;o</td>
+<td>Menu com finalidades: licita&#231;&#227;o, conta banc&#225;ria, financiamento, fornecedor, regulariza&#231;&#227;o ou outra finalidade</td>
+<td><code>tipoCertidao</code></td>
+</tr>
+<tr>
+<td>4</td>
+<td>Finalidade</td>
+<td><code>Obrigado. Registrei sua solicita&#231;&#227;o e um contador entrar&#225; em contato para dar continuidade ao atendimento.</code></td>
+<td><code>finalidade</code></td>
+</tr>
+</tbody></table>
+<p>Exemplo de conversa:</p>
+<pre>Cliente: 6
+Bot: Informe o CNPJ.
+Cliente: 12.345.678/0001-90
+Bot: Qual tipo de certid&#227;o voc&#234; precisa?
+
+1 - Receita Federal / PGFN
+2 - FGTS
+3 - Trabalhista
+4 - Estadual
+5 - Municipal
+6 - Fal&#234;ncia e recupera&#231;&#227;o judicial
+7 - Todas as certid&#245;es
+8 - N&#227;o sei, quero ajuda do contador
+Cliente: 1
+Bot: Qual &#233; a finalidade da certid&#227;o?
+
+Exemplos:
+1 - Participar de licita&#231;&#227;o
+2 - Abrir conta banc&#225;ria
+3 - Financiamento
+4 - Cadastro em fornecedor
+5 - Regulariza&#231;&#227;o da empresa
+6 - Outra finalidade
+Cliente: 1
+Bot: Obrigado. Registrei sua solicita&#231;&#227;o e um contador entrar&#225; em contato para dar continuidade ao atendimento.</pre>
+<p>Crit&#233;rio de valida&#231;&#227;o: o atendimento deve conter CNPJ, tipo de certid&#227;o escolhido e finalidade. O cliente deve conseguir responder usando o n&#250;mero da op&#231;&#227;o ou escrevendo a certid&#227;o/finalidade em texto livre.</p>
+<h2>Op&#231;&#227;o 7 - Falar com contador</h2>
+<p>Objetivo: encaminhar o cliente para atendimento humano.</p>
+<p>Tipo registrado: <code>FALAR_COM_CONTADOR</code></p>
+<p>Status final: <code>AGUARDANDO_HUMANO</code></p>
+<table><thead><tr>
+<th>Passo</th>
+<th>Cliente envia</th>
+<th>Bot responde</th>
+<th>Campo registrado</th>
+</tr></thead><tbody>
+<tr>
+<td>1</td>
+<td><code>7</code> ou texto parecido com &quot;falar com contador&quot;</td>
+<td><code>Certo. Seu atendimento foi encaminhado para um contador. Em breve, nossa equipe entrar&#225; em contato.</code></td>
+<td>Cria atendimento sem coleta adicional</td>
+</tr>
+</tbody></table>
+<p>Exemplo de conversa:</p>
+<pre>Cliente: 7
+Bot: Certo. Seu atendimento foi encaminhado para um contador. Em breve, nossa equipe entrar&#225; em contato.</pre>
+<p>Crit&#233;rio de valida&#231;&#227;o: o atendimento deve ser criado com status <code>AGUARDANDO_HUMANO</code>.</p>
+<h2>Op&#231;&#227;o 8 - Enviar documentos</h2>
+<p>Objetivo: orientar o cliente sobre envio de documentos.</p>
+<p>Tipo registrado: <code>ENVIAR_DOCUMENTOS</code></p>
+<p>Status final: <code>DOCUMENTOS_PENDENTES</code></p>
+<table><thead><tr>
+<th>Passo</th>
+<th>Cliente envia</th>
+<th>Bot responde</th>
+<th>Campo registrado</th>
+</tr></thead><tbody>
+<tr>
+<td>1</td>
+<td><code>8</code> ou texto parecido com &quot;enviar documentos&quot;</td>
+<td><code>Voc&#234; pode enviar os documentos pelo canal combinado com o escrit&#243;rio. Caso esteja no WhatsApp, anexe os arquivos nesta conversa. Seu atendimento ficou como documentos pendentes.</code></td>
+<td>Cria atendimento sem coleta adicional</td>
+</tr>
+</tbody></table>
+<p>Exemplo de conversa:</p>
+<pre>Cliente: 8
+Bot: Voc&#234; pode enviar os documentos pelo canal combinado com o escrit&#243;rio. Caso esteja no WhatsApp, anexe os arquivos nesta conversa. Seu atendimento ficou como documentos pendentes.</pre>
+<p>Crit&#233;rio de valida&#231;&#227;o: o atendimento deve ser criado com status <code>DOCUMENTOS_PENDENTES</code>.</p>
+<h2>Valida&#231;&#227;o r&#225;pida pela contabilidade</h2>
+<p>Use este checklist para homologar o fluxo:</p>
+<ul>
+<li>Enviar <code>oi</code> e confirmar se o menu de 1 a 8 aparece.</li>
+<li>Testar cada op&#231;&#227;o digitando apenas o n&#250;mero.</li>
+<li>Confirmar se as perguntas aparecem na ordem descrita neste documento.</li>
+<li>Confirmar se, ao final das op&#231;&#245;es 1 a 6, o bot informa que a solicita&#231;&#227;o foi registrada.</li>
+<li>Confirmar se a op&#231;&#227;o 7 fica como <code>AGUARDANDO_HUMANO</code>.</li>
+<li>Confirmar se a op&#231;&#227;o 8 fica como <code>DOCUMENTOS_PENDENTES</code>.</li>
+<li>Durante qualquer atendimento aberto, enviar <code>menu</code> ou <code>oi</code> e confirmar se o bot mostra o menu novamente.</li>
+<li>No painel do escrit&#243;rio, validar se os atendimentos aparecem na listagem e se o hist&#243;rico da conversa est&#225; dispon&#237;vel.</li>
+</ul>
+</body></html>

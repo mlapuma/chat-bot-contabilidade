@@ -11,6 +11,9 @@ public class ChatRequestDTO {
     @Size(max = 1000)
     private String mensagem;
 
+    private String numeroWhatsAppDestino;
+    private String phoneNumberIdDestino;
+
     public Long getClienteId() {
         return clienteId;
     }
@@ -25,5 +28,21 @@ public class ChatRequestDTO {
 
     public void setMensagem(String mensagem) {
         this.mensagem = mensagem;
+    }
+
+    public String getNumeroWhatsAppDestino() {
+        return numeroWhatsAppDestino;
+    }
+
+    public void setNumeroWhatsAppDestino(String numeroWhatsAppDestino) {
+        this.numeroWhatsAppDestino = numeroWhatsAppDestino;
+    }
+
+    public String getPhoneNumberIdDestino() {
+        return phoneNumberIdDestino;
+    }
+
+    public void setPhoneNumberIdDestino(String phoneNumberIdDestino) {
+        this.phoneNumberIdDestino = phoneNumberIdDestino;
     }
 }

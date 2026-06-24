@@ -1,0 +1,352 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <title>Relatorio de Gastos - Chatbot Contabilidade</title>
+  <style>
+    @page {
+      size: A4;
+      margin: 18mm;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      color: #1f2933;
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: 12px;
+      line-height: 1.45;
+    }
+
+    h1, h2, h3, p {
+      margin-top: 0;
+    }
+
+    h1 {
+      color: #0f172a;
+      font-size: 25px;
+      margin-bottom: 6px;
+    }
+
+    h2 {
+      border-bottom: 2px solid #0f766e;
+      color: #0f172a;
+      font-size: 17px;
+      margin: 24px 0 10px;
+      padding-bottom: 5px;
+    }
+
+    h3 {
+      color: #134e4a;
+      font-size: 14px;
+      margin-bottom: 6px;
+    }
+
+    .subtitle {
+      color: #52606d;
+      font-size: 13px;
+      margin-bottom: 18px;
+    }
+
+    .meta {
+      background: #ecfdf5;
+      border-left: 4px solid #0f766e;
+      margin: 14px 0 20px;
+      padding: 10px 12px;
+    }
+
+    .grid {
+      display: grid;
+      gap: 10px;
+      grid-template-columns: 1fr 1fr;
+      margin: 12px 0;
+    }
+
+    .box {
+      border: 1px solid #d9e2ec;
+      border-radius: 6px;
+      padding: 11px;
+    }
+
+    .recommended {
+      border-color: #0f766e;
+      border-width: 2px;
+    }
+
+    .price {
+      color: #0f172a;
+      font-size: 22px;
+      font-weight: 700;
+      margin: 6px 0;
+    }
+
+    .muted {
+      color: #64748b;
+    }
+
+    table {
+      border-collapse: collapse;
+      margin: 10px 0 16px;
+      width: 100%;
+    }
+
+    th, td {
+      border: 1px solid #d9e2ec;
+      padding: 7px;
+      text-align: left;
+      vertical-align: top;
+    }
+
+    th {
+      background: #f1f5f9;
+      color: #0f172a;
+      font-weight: 700;
+    }
+
+    .total-row td {
+      background: #f8fafc;
+      font-weight: 700;
+    }
+
+    ul {
+      margin: 6px 0 12px 18px;
+      padding: 0;
+    }
+
+    .note {
+      background: #fff7ed;
+      border-left: 4px solid #ea580c;
+      padding: 9px 12px;
+    }
+
+    .ok {
+      color: #047857;
+      font-weight: 700;
+    }
+
+    .avoid {
+      color: #b45309;
+      font-weight: 700;
+    }
+
+    footer {
+      border-top: 1px solid #d9e2ec;
+      color: #64748b;
+      font-size: 10px;
+      margin-top: 22px;
+      padding-top: 8px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Relatorio de Gastos - Chatbot ACSA Contabilidade</h1>
+  <p class="subtitle">Estimativa para demonstracao local e publicacao em producao do chatbot de atendimento contabil.</p>
+
+  <div class="meta">
+    <strong>Data base:</strong> 23/06/2026<br>
+    <strong>Objetivo:</strong> apresentar ao escritorio o custo previsto para colocar o chatbot em producao, sem incluir dominio, pois o cliente ja possui dominio proprio.
+  </div>
+
+  <h2>Resumo Executivo</h2>
+  <div class="grid">
+    <div class="box">
+      <h3>Demonstracao local</h3>
+      <p class="price">R$ 0,00</p>
+      <p>Usada apenas para apresentar o funcionamento no notebook, validar fluxos e simular atendimentos.</p>
+    </div>
+    <div class="box recommended">
+      <h3>Producao recomendada inicial</h3>
+      <p class="price">R$ 29,99/mes</p>
+      <p>Plano VPS KVM 1 em valor promocional informado na tela da Hostinger. Renovacao indicada: R$ 59,99/mes.</p>
+    </div>
+  </div>
+
+  <h2>Plano Recomendado</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>Item</th>
+        <th>Recomendacao</th>
+        <th>Justificativa</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Servidor</td>
+        <td>Hostinger VPS KVM 1</td>
+        <td>Atende o inicio do projeto com 1 vCPU, 4 GB RAM, 50 GB NVMe e 4 TB de banda.</td>
+      </tr>
+      <tr>
+        <td>Sistema operacional</td>
+        <td>Ubuntu 22.04 LTS ou 24.04 LTS</td>
+        <td>Ambiente estavel para Docker, Java 17, PostgreSQL e Nginx.</td>
+      </tr>
+      <tr>
+        <td>Banco de dados</td>
+        <td>PostgreSQL no mesmo servidor</td>
+        <td>Reduz custo inicial e simplifica a operacao.</td>
+      </tr>
+      <tr>
+        <td>HTTPS/SSL</td>
+        <td>Let's Encrypt</td>
+        <td>Certificado gratuito para uso com subdominio do cliente.</td>
+      </tr>
+      <tr>
+        <td>WhatsApp</td>
+        <td>WhatsApp Cloud API oficial da Meta</td>
+        <td>Necessario para chatbot dentro do WhatsApp real. Custo variavel conforme regras e volume da Meta.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h2>Comparativo de VPS</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>Plano</th>
+        <th>Valor promocional</th>
+        <th>Renovacao indicada</th>
+        <th>Recursos</th>
+        <th>Avaliacao</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>KVM 1</td>
+        <td>R$ 29,99/mes</td>
+        <td>R$ 59,99/mes</td>
+        <td>1 vCPU, 4 GB RAM, 50 GB NVMe</td>
+        <td><span class="ok">Recomendado para iniciar</span></td>
+      </tr>
+      <tr>
+        <td>KVM 2</td>
+        <td>R$ 43,99/mes</td>
+        <td>R$ 77,99/mes</td>
+        <td>2 vCPU, 8 GB RAM, 100 GB NVMe</td>
+        <td>Melhor se houver muitos atendimentos ou outros sistemas no mesmo servidor.</td>
+      </tr>
+      <tr>
+        <td>KVM 4</td>
+        <td>R$ 59,99/mes</td>
+        <td>R$ 149,99/mes</td>
+        <td>4 vCPU, 16 GB RAM, 200 GB NVMe</td>
+        <td>Acima do necessario para o inicio.</td>
+      </tr>
+      <tr>
+        <td>KVM 8</td>
+        <td>R$ 119,99/mes</td>
+        <td>R$ 259,99/mes</td>
+        <td>8 vCPU, 32 GB RAM, 400 GB NVMe</td>
+        <td>Desnecessario para esta primeira etapa.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h2>Custo Mensal Estimado</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>Categoria</th>
+        <th>Item</th>
+        <th>Valor estimado</th>
+        <th>Observacao</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Infraestrutura</td>
+        <td>VPS KVM 1</td>
+        <td>R$ 29,99/mes promocional</td>
+        <td>Renovacao indicada na tela: R$ 59,99/mes.</td>
+      </tr>
+      <tr>
+        <td>Banco</td>
+        <td>PostgreSQL</td>
+        <td>R$ 0,00</td>
+        <td>Instalado no mesmo servidor.</td>
+      </tr>
+      <tr>
+        <td>SSL</td>
+        <td>Let's Encrypt</td>
+        <td>R$ 0,00</td>
+        <td>Exige subdominio apontado para a VPS.</td>
+      </tr>
+      <tr>
+        <td>Dominio</td>
+        <td>Dominio do cliente</td>
+        <td>R$ 0,00</td>
+        <td>Nao incluso, pois o escritorio ja possui dominio.</td>
+      </tr>
+      <tr>
+        <td>Backup</td>
+        <td>Backup automatico diario</td>
+        <td>Opcional / pago</td>
+        <td>Pode ser contratado depois ou configurado manualmente.</td>
+      </tr>
+      <tr>
+        <td>WhatsApp</td>
+        <td>WhatsApp Cloud API</td>
+        <td>Variavel</td>
+        <td>Cobrado pela Meta conforme volume e categoria das conversas.</td>
+      </tr>
+      <tr class="total-row">
+        <td colspan="2">Total minimo mensal para servidor</td>
+        <td>R$ 29,99 a R$ 59,99/mes</td>
+        <td>Sem considerar WhatsApp Cloud API e sem servicos de suporte.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h2>Custos de Implantacao e Suporte</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>Item</th>
+        <th>Faixa sugerida</th>
+        <th>Inclui</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Setup inicial</td>
+        <td>R$ 1.500,00 a R$ 3.500,00</td>
+        <td>Servidor, Docker, banco, Nginx, deploy, variaveis, validacao da API e testes.</td>
+      </tr>
+      <tr>
+        <td>Configuracao WhatsApp Cloud API</td>
+        <td>R$ 400,00 a R$ 1.200,00</td>
+        <td>App Meta, webhook, token, numero, assinatura do campo messages e testes.</td>
+      </tr>
+      <tr>
+        <td>Manutencao mensal</td>
+        <td>R$ 300,00 a R$ 1.000,00</td>
+        <td>Logs, atualizacoes, backup, pequenos ajustes, suporte e acompanhamento.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h2>Recursos Adicionais da Hostinger</h2>
+  <ul>
+    <li><strong>Detector de malware:</strong> pode manter se estiver gratuito.</li>
+    <li><strong>Backups automaticos diarios:</strong> <span class="avoid">nao contratar inicialmente</span>, pois e pago e pode ser configurado depois.</li>
+    <li><strong>Gerenciador Docker:</strong> <span class="avoid">nao contratar</span>, pois o Docker sera configurado diretamente no servidor.</li>
+  </ul>
+
+  <div class="note">
+    <strong>Observacao para o escritorio:</strong> o ambiente local mostrado em demonstracao nao possui custo de servidor. Para uso real com o numero oficial da contabilidade no WhatsApp, sera necessario publicar o backend em uma VPS e configurar a WhatsApp Cloud API oficial da Meta.
+  </div>
+
+  <h2>Conclusao</h2>
+  <p>
+    Para iniciar com baixo custo e possibilidade de crescimento, a recomendacao e contratar o plano <strong>VPS KVM 1</strong>.
+    Ele permite demonstrar profissionalmente o chatbot em producao, manter PostgreSQL no mesmo servidor e evoluir para o KVM 2 caso o escritorio tenha aumento de atendimentos ou precise hospedar outros sistemas.
+  </p>
+
+  <footer>
+    Valores baseados nas telas consultadas durante a avaliacao. Precos promocionais, impostos, renovacoes e custos da Meta podem mudar no momento da contratacao.
+  </footer>
+</body>
+</html>

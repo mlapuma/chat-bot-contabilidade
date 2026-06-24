@@ -3,32 +3,59 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Chatbot Contabil</title>
-    <link rel="stylesheet" href="styles.css">
+    <title>Chatbot Contábil</title>
+    <meta http-equiv="Cache-Control" content="no-store">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <link rel="stylesheet" href="styles.css?v=20260623-painel-producao">
 </head>
 <body>
 <header class="topbar">
     <div>
-        <strong>Escritorio Contabil</strong>
+        <strong>ACSA Contabilidade</strong>
         <span>Atendimentos do chatbot</span>
     </div>
-    <button id="refreshButton" type="button">Atualizar</button>
+    <div class="attendant-bar">
+        <label for="atendenteAtual">Atendente</label>
+        <select id="atendenteAtual" aria-label="Atendente logado">
+            <option value="">Selecione o atendente</option>
+            <option value="Maria Silva">Maria Silva</option>
+            <option value="Joao Pereira">Joao Pereira</option>
+            <option value="Ana Souza">Ana Souza</option>
+            <option value="Carlos Lima">Carlos Lima</option>
+        </select>
+        <label for="departamentoAtual">Departamento</label>
+        <select id="departamentoAtual" aria-label="Departamento do atendente">
+            <option value="">Todos</option>
+            <option value="Departamento Pessoal">Departamento Pessoal</option>
+            <option value="Fiscal">Fiscal</option>
+            <option value="Jurídico">Jurídico</option>
+            <option value="Contabilidade">Contabilidade</option>
+        </select>
+        <button id="refreshButton" type="button">Atualizar</button>
+    </div>
 </header>
 
 <main class="layout">
     <section class="panel">
         <div class="panel-header">
             <h1>Atendimentos</h1>
-            <span id="totalAtendimentos">0 registros</span>
+            <div class="panel-header-meta">
+                <span id="totalAtendimentos">0 registros</span>
+                <span id="autoRefreshStatus">Atualizacao automatica ativa</span>
+            </div>
         </div>
         <div class="table-wrap">
             <table>
                 <thead>
                 <tr>
                     <th>Cliente</th>
+                    <th>WhatsApp</th>
                     <th>Tipo</th>
+                    <th>Departamento</th>
                     <th>Data</th>
                     <th>Status</th>
+                    <th>Atendente</th>
                     <th></th>
                 </tr>
                 </thead>
@@ -39,13 +66,21 @@
 
     <aside class="panel detail">
         <div class="panel-header">
-            <h2>Historico</h2>
+            <h2>Histórico</h2>
             <span id="historicoCliente">Selecione um atendimento</span>
         </div>
         <div id="historico" class="history empty">Nenhuma conversa selecionada.</div>
+        <form id="respostaHumanaForm" class="human-reply hidden">
+            <textarea id="respostaHumanaMensagem" placeholder="Digite a resposta para enviar ao cliente pelo WhatsApp"></textarea>
+            <div>
+                <button type="submit">Enviar resposta</button>
+                <button id="liberarAtendimentoButton" class="secondary-button" type="button">Liberar atendimento</button>
+            </div>
+            <span id="respostaHumanaStatus"></span>
+        </form>
     </aside>
 
-    <section class="panel webchat">
+    <section class="panel webchat hidden" aria-hidden="true">
         <div class="panel-header">
             <h2>Teste do chatbot</h2>
             <span>Web chat local</span>
@@ -56,8 +91,8 @@
             <input id="email" type="email" placeholder="E-mail" required>
             <input id="cpfCnpj" placeholder="CPF/CNPJ" required>
             <select id="tipoPessoa" required>
-                <option value="FISICA">Fisica</option>
-                <option value="JURIDICA">Juridica</option>
+                <option value="FISICA">Física</option>
+                <option value="JURIDICA">Jurídica</option>
             </select>
             <button type="submit">Criar cliente</button>
         </form>
@@ -67,8 +102,36 @@
             <button type="submit">Enviar</button>
         </form>
     </section>
+
+    <section class="panel whatsapp-test hidden" aria-hidden="true">
+        <div class="panel-header">
+            <h2>WhatsApp simulado</h2>
+            <span>Teste local no notebook</span>
+        </div>
+        <div class="demo-actions">
+            <button id="whatsappDemoButton" type="button">Executar demo automática</button>
+            <button id="whatsappClearButton" class="secondary-button" type="button">Limpar conversa</button>
+        </div>
+        <div class="whatsapp-menu">
+            <button type="button" data-whatsapp-option="1">1 - Abrir empresa</button>
+            <button type="button" data-whatsapp-option="2">2 - Regularizar MEI</button>
+            <button type="button" data-whatsapp-option="3">3 - Emitir DAS</button>
+            <button type="button" data-whatsapp-option="4">4 - Imposto de Renda</button>
+            <button type="button" data-whatsapp-option="5">5 - Folha de pagamento</button>
+            <button type="button" data-whatsapp-option="6">6 - Certidões negativas</button>
+            <button type="button" data-whatsapp-option="7">7 - Falar com contador</button>
+            <button type="button" data-whatsapp-option="8">8 - Enviar documentos</button>
+        </div>
+        <form id="whatsappForm" class="whatsapp-form">
+            <input id="whatsappNome" placeholder="Nome do contato" value="Cliente WhatsApp Teste" required>
+            <input id="whatsappTelefone" placeholder="Telefone WhatsApp" value="+55 11 99999-0000" required>
+            <input id="whatsappMensagem" placeholder="Mensagem recebida" value="1" required>
+            <button type="submit">Simular envio</button>
+        </form>
+        <div id="whatsappBox" class="chat-box"></div>
+    </section>
 </main>
 
-<script src="script.js"></script>
+<script src="script.js?v=20260623-painel-producao"></script>
 </body>
 </html>

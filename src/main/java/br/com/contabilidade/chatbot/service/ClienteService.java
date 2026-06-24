@@ -42,7 +42,7 @@ public class ClienteService {
     @Transactional(readOnly = true)
     public Cliente buscarEntidade(Long id) {
         return clienteRepository.findById(id)
-                .orElseThrow(() -> new RecursoNaoEncontradoException("Cliente nao encontrado"));
+                .orElseThrow(() -> new RecursoNaoEncontradoException("Cliente não encontrado"));
     }
 
     ClienteDTO toDto(Cliente cliente) {

@@ -36,6 +36,33 @@ body {
     gap: 4px;
 }
 
+.topbar .attendant-bar {
+    display: grid;
+}
+
+.attendant-bar {
+    display: grid;
+    grid-template-columns: auto minmax(180px, 240px) auto minmax(180px, 240px) auto;
+    align-items: center;
+    gap: 10px;
+}
+
+.attendant-bar label {
+    color: var(--muted);
+    font-size: 13px;
+    font-weight: 700;
+}
+
+.attendant-bar select {
+    min-height: 40px;
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    background: #ffffff;
+    color: var(--text);
+    font-size: 14px;
+    padding: 0 12px;
+}
+
 .topbar span,
 .panel-header span {
     color: var(--muted);
@@ -47,6 +74,7 @@ button {
     border-radius: 6px;
     background: var(--primary);
     color: #ffffff;
+    min-height: 40px;
     padding: 10px 14px;
     cursor: pointer;
     font-weight: 700;
@@ -54,6 +82,20 @@ button {
 
 button:hover {
     background: var(--primary-dark);
+}
+
+button:disabled {
+    cursor: not-allowed;
+    opacity: 0.65;
+}
+
+.secondary-button {
+    background: #eef2f6;
+    color: var(--text);
+}
+
+.secondary-button:hover {
+    background: #dfe5ee;
 }
 
 .layout {
@@ -78,6 +120,13 @@ button:hover {
     justify-content: space-between;
     gap: 12px;
     border-bottom: 1px solid var(--line);
+}
+
+.panel-header-meta {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    text-align: right;
 }
 
 h1,
@@ -110,6 +159,10 @@ th {
     text-transform: uppercase;
 }
 
+.selected-row {
+    background: #f0fdfa;
+}
+
 .status {
     display: inline-flex;
     border-radius: 999px;
@@ -129,6 +182,28 @@ th {
 .link-button:hover {
     background: transparent;
     color: var(--primary-dark);
+}
+
+.actions-cell {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    white-space: nowrap;
+}
+
+.whatsapp-origin {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    min-width: 150px;
+    color: var(--muted);
+    font-size: 12px;
+    line-height: 1.35;
+}
+
+.whatsapp-origin span:first-child {
+    color: var(--text);
+    font-weight: 700;
 }
 
 .detail {
@@ -164,17 +239,84 @@ th {
     background: #fff4e4;
 }
 
-.webchat {
+.message.HUMANO {
+    background: #e9efff;
+}
+
+.hidden {
+    display: none !important;
+}
+
+.human-reply {
+    border-top: 1px solid var(--line);
+    padding: 16px;
+    display: grid;
+    gap: 10px;
+}
+
+.human-reply textarea {
+    width: 100%;
+    min-height: 96px;
+    resize: vertical;
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    padding: 10px;
+    font: inherit;
+}
+
+.human-reply div {
+    display: flex;
+    gap: 10px;
+}
+
+.human-reply span {
+    color: var(--muted);
+    font-size: 13px;
+}
+
+.webchat,
+.whatsapp-test {
     grid-column: 1 / -1;
 }
 
 .client-form,
-.chat-form {
+.chat-form,
+.whatsapp-form {
     padding: 16px;
     display: grid;
     grid-template-columns: repeat(6, minmax(120px, 1fr));
     gap: 10px;
     border-bottom: 1px solid var(--line);
+}
+
+.demo-actions {
+    padding: 16px;
+    display: flex;
+    gap: 10px;
+    border-bottom: 1px solid var(--line);
+}
+
+.whatsapp-menu {
+    padding: 16px;
+    display: grid;
+    grid-template-columns: repeat(4, minmax(160px, 1fr));
+    gap: 10px;
+    border-bottom: 1px solid var(--line);
+    background: #f9fafb;
+}
+
+.whatsapp-menu button {
+    background: #ffffff;
+    color: var(--text);
+    border: 1px solid var(--line);
+    text-align: left;
+    font-weight: 600;
+}
+
+.whatsapp-menu button:hover {
+    border-color: var(--primary);
+    color: var(--primary-dark);
+    background: #edf7f4;
 }
 
 .client-form button,
@@ -198,11 +340,16 @@ th {
     border-top: 1px solid var(--line);
 }
 
+.whatsapp-form {
+    grid-template-columns: 1fr 180px 1fr auto;
+}
+
 input,
 select {
     width: 100%;
     border: 1px solid var(--line);
     border-radius: 6px;
+    min-height: 40px;
     padding: 10px;
     font: inherit;
 }
@@ -213,7 +360,20 @@ select {
         padding: 14px;
     }
 
-    .client-form {
+    .client-form,
+    .whatsapp-form {
+        grid-template-columns: 1fr;
+    }
+
+    .demo-actions {
+        flex-direction: column;
+    }
+
+    .whatsapp-menu {
+        grid-template-columns: 1fr;
+    }
+
+    .attendant-bar {
         grid-template-columns: 1fr;
     }
 }
